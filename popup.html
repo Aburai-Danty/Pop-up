@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html class="movizero" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+
+    <style>
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+
+      .custom-popup {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 2%;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 2vw rgba(0, 0, 0, 0.5);
+        background-color: #fff;
+        color: black;
+        z-index: 2;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(120%, -60%);
+        font-size: 55px;
+        cursor: pointer;
+        z-index: 2;
+        font-weight: bold;
+        color: white;
+      }
+
+      .popup-absolute {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      div#customPopup {
+        width: 970px;
+        height: 700px;
+      }
+
+      .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        color: white;
+      }
+
+      .popup1 {
+        width: 425px;
+        height: 120px;
+      }
+
+      .popup1-buttons {
+        display: flex;
+        justify-content: center;
+      }
+
+      .popup1-button,
+      .popup2-button {
+        display: flex;
+        align-items: center;
+        padding: 6px 40px;
+        cursor: pointer;
+      }
+
+      button.popup1-button {
+        background: #ff5151;
+        color: white;
+        border: none !important;
+      }
+
+      button.popup2-button {
+        background: #6c5454;
+        color: white;
+        border: none !important;
+      }
+
+      .popup1-button img {
+        margin-right: 5px;
+      }
+
+      .button-space {
+        width: 20px;
+      }
+
+      .popup1-text {
+        color: black;
+      }
+
+      .popup1-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: rgb(224, 219, 219);
+        width: 100%;
+        height: 125px;
+        border-radius: 4px;
+      }
+
+      p.popup1-text {
+        width: 400px;
+      }
+
+      .custom-popup .cards-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+      .left-div {
+        position: fixed;
+        top: 27%;
+        left: 0;
+        transform: translate(0, -50%);
+        padding: 10px;
+        z-index: 2;
+        max-width: 350px;
+        text-align: left;
+        margin-left: 35px;
+        font-size: 18px;
+      }
+
+      .preview-img {
+        width: 100%;
+        max-height: 200px;
+
+        display: none;
+        object-fit: cover;
+      }
+      #aligncenter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        margin-bottom: 30px;
+      }
+
+      #saveButton {
+        background-color: green;
+        color: white;
+        padding: 10px 60px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 80px;
+      }
+      .imgblack {
+        max-width: 100%;
+        max-height: 100px;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+      img {
+        cursor: pointer;
+      }
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li:not(:first-child)::before {
+        content: "\2022";
+        margin-right: 0.5em;
+      }
+
+      p {
+        margin-left: 0;
+        padding-left: 0;
+      }
+      label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .uppercase-first {
+        text-transform: uppercase;
+      }
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        top: 0;
+        left: 0;
+        position: absolute;
+        z-index: 1;
+      }
+      .card label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+      }
+
+      .card {
+        position: relative;
+        width: 90%;
+        max-width: 400px;
+        height: 30vw;
+        max-height: 202px;
+        border: 2px dashed #000000;
+        border-radius: 7px;
+        overflow: hidden;
+        margin-bottom: 40px;
+        display: flex;
+        flex-direction: column;
+      }
+      .card0,
+      .card1 {
+        position: relative;
+        width: 90%;
+        max-width: 400px;
+        height: 30vw;
+        max-height: 202px;
+        border: 2px dashed #000000;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 40px;
+        text-align: center;
+      }
+      .remove-button {
+        cursor: pointer;
+        color: red; /* Cor do texto */
+        font-weight: bold;
+        font-size: 14px;
+        user-select: none;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .movizero {
+          overflow-x: hidden;
+        }
+        div#customPopup {
+          max-width: 85%;
+          margin-top: 33px;
+        }
+        #saveButton {
+          margin-top: 0;
+        }
+
+        .body {
+          padding: 0;
+          margin: 0;
+        }
+        .custom-popup {
+          max-width: 97%;
+          margin-top: 23px;
+          border: 2px solid black !important;
+        }
+        .popup1-content {
+          max-width: 100%;
+
+          font-size: 15px;
+        }
+        button {
+          font-size: 13px;
+        }
+        .popup1-button,
+        .popup2-button {
+          padding: 10px 35px;
+        }
+        .left-div {
+          padding: 0;
+        }
+        .popup-absolute {
+          margin-top: 23px;
+        }
+        .cards-container {
+          width: 100%;
+        }
+        .card0 {
+          margin-top: 200px;
+        }
+        .popup1-text {
+          max-width: 85%;
+        }
+
+        .close-btn {
+          transform: translate(92%, -51%);
+          font-size: 40px;
+        }
+        h1 {
+          margin-left: 35px;
+        }
+        .custom-popup .cards-container {
+          flex-wrap: wrap;
+          align-content: center;
+        }
+        .container-main-flex {
+          display: flex;
+          justify-content: center;
+          height: 100vh;
+          align-content: stretch;
+          flex-wrap: wrap;
+          align-items: baseline;
+        }
+        div#newPopup {
+    width: 350px;
+    height: 650px;
+}
+      }
+      #color-button-compreend {
+        background: green;
+        position: absolute;
+  bottom: 10px;
+  right: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="container-main-flex">
+      <!-- Overlay -->
+      <div
+        id="overlay"
+        class="overlay"
+        onclick="closePopup('customPopup')"
+      ></div>
+      <!-- Botões -->
+
+      <!-- Popups -->
+      <div id="popup1" class="popup1">
+        <div class="popup1-content">
+          <p class="popup1-text">
+            Compras realizadas com cartão de crédito exigem o envio de
+            documentação, tais como: Identidade (Frente e verso) e nome do
+            comprador.
+          </p>
+          <div class="popup1-buttons">
+            <button class="popup1-button" onclick="openCustomPopup('Atenção:')">
+              <img src="/assets/Vector.png" alt="Enviar Agora" /> Enviar agora
+            </button>
+            <div class="button-space"></div>
+            <button class="popup2-button" onclick="openNewPopup()">Enviar depois</button>
+          </div>
+
+            <div class="popup" id="myPopup">
+              <span class="close" onclick="closePopup()">&times;</span>
+              <p>Texto dentro do popup</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom Popup Grande -->
+      <div class="custom-popup popup-absolute" id="newPopup">
+        <span class="close-btn" onclick="closePopup('newPopup')">&times;</span>
+        <h1>
+          <p id="newPopupText"></p>
+        </h1>
+      
+        <div class="cards-container">
+          <div class="left-mid">
+            <ul>
+              <li>
+                <span class="uppercase-first">C</span>aso opte por enviar após finalizar a compra os documentos, você precisará entrar em contato conosco via whatsapp e e enviar os seguintes documentos:
+                Documento de identidade Original ou CNH Original
+                Nome do titular do cartão
+              </li>
+              <li>Documento de identidade original válida</li>
+              <li>Carteira CNH válida</li>
+            </ul>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
+              quo quibusdam placeat aliquam. Dicta tempore obcaecati cum animi!
+              Alias, sint.
+            </p>
+          </div>
+        </div>
+        <button id="color-button-compreend" class="popup1-button" onclick="closePopup('newPopup')">Compreendo</button>
+      </div>
+      <!-- Custom Popup -->
+      <div class="custom-popup popup-absolute" id="customPopup">
+        <span class="close-btn" onclick="closePopup('customPopup')"
+          >&times;</span
+        >
+        <h1>
+          <p id="customPopupText"></p>
+        </h1>
+
+        <div class="cards-container">
+          <div class="left-div">
+            <ul>
+              <li>
+                <span class="uppercase-first">S</span>erão aceitos documentos
+                originais, tais como: seus documentos
+              </li>
+              <li>Documento de identidade original válida</li>
+              <li>Carteira CNH válida</li>
+            </ul>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
+              quo quibusdam placeat aliquam. Dicta tempore obcaecati cum animi!
+              Alias, sint.
+            </p>
+          </div>
+
+          <!-- Divs dos cartões -->
+          <div class="card0">
+            <label class="aligin-text-img" for="fileInput1">
+              <img
+                class="imgblack"
+                src="/assets/Vectorblack.png"
+                alt="FRENTE DO DOCUMENTO"
+              />
+              FRENTE DO DOCUMENTO
+            </label>
+            <input
+              type="file"
+              id="fileInput1"
+              style="display: none"
+              onchange="previewImage('fileInput1', 'imagePreview1')"
+            />
+            <span
+              class="remove-button"
+              onclick="removeImage('fileInput1', 'imagePreview1')"
+              >Remover foto</span
+            >
+            <img id="imagePreview1" class="preview-img" />
+          </div>
+
+          <div class="card1">
+            <label class="aligin-text-img" for="fileInput2">
+              <img
+                class="imgblack"
+                src="/assets/Vectorblack.png"
+                alt="VERSO DO DOCUMENTO"
+              />
+              VERSO DO DOCUMENTO
+            </label>
+            <input
+              type="file"
+              id="fileInput2"
+              style="display: none"
+              onchange="previewImage('fileInput2', 'imagePreview2')"
+            />
+            <span
+              class="remove-button"
+              onclick="removeImage('fileInput2', 'imagePreview2')"
+              >Remover foto</span
+            >
+            <img id="imagePreview2" class="preview-img" />
+          </div>
+          <!-- Botão Salvar dentro do popup -->
+          <button id="saveButton">Salvar</button>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Adiciona event listener aos botões
+        document.querySelectorAll(".btn-2").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            openPopup("Texto 2", "popup2");
+          });
+        });
+
+        // Adiciona event listeners aos inputs de arquivo
+        document
+          .getElementById("fileInput1")
+          .addEventListener("change", handleFileSelect);
+        document
+          .getElementById("fileInput2")
+          .addEventListener("change", handleFileSelect);
+      });
+
+      function closePopup(popupId) {
+        const popup = document.getElementById(popupId);
+        const overlay = document.getElementById("overlay");
+
+        if (popup) {
+          popup.style.display = "none";
+          overlay.style.display = "none";
+        }
+      }
+
+      function closeAllPopups() {
+        const popups = document.querySelectorAll(".popup");
+        popups.forEach((popup) => {
+          popup.style.display = "none";
+        });
+        document.getElementById("overlay").style.display = "none";
+      }
+
+      function openCustomPopup(customText) {
+        closeAllPopups();
+
+        const customPopup = document.getElementById("customPopup");
+        const customPopupText = document.getElementById("customPopupText");
+        const overlay = document.getElementById("overlay");
+
+        customPopupText.innerText = customText;
+        customPopup.style.display = "block";
+        overlay.style.display = "block";
+      }
+
+      function handleFileSelect(event) {
+        const fileInput = event.target;
+        const cardId = fileInput.id.replace("fileInput", "");
+        const imagePreview = document.getElementById(`imagePreview${cardId}`);
+        const fileNameElement = document.getElementById(`fileName${cardId}`);
+
+        // Verifica se há um arquivo selecionado
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          const imageUrl = URL.createObjectURL(file);
+          imagePreview.src = imageUrl;
+          fileNameElement.textContent = `Arquivo selecionado: ${file.name}`;
+        }
+      }
+
+      document
+        .getElementById("saveButton")
+        .addEventListener("click", saveFiles);
+
+      function saveFiles() {
+        const fileInput1 = document.getElementById("fileInput1");
+        const fileInput2 = document.getElementById("fileInput2");
+        const formData = new FormData();
+        formData.append("file1", fileInput1.files[0]);
+        formData.append("file2", fileInput2.files[0]);
+
+        // Usa a função fetch para enviar os arquivos para o servidor
+        fetch("seu_php-th.php", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Resposta do servidor:", data);
+          })
+          .catch((error) => console.error("Erro:", error));
+      }
+      // visualização de imagens
+      function previewImage(inputId, imageId) {
+        var input = document.getElementById(inputId);
+        var image = document.getElementById(imageId);
+
+        // Verifica se um arquivo foi selecionado
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+            // Exibe a imagem dentro do card
+            image.src = e.target.result;
+            image.style.display = "block";
+          };
+
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+      function handleFileSelect(event) {
+        const fileInput = event.target;
+        const cardId = fileInput.id.replace("fileInput", "");
+        const imagePreview = document.getElementById(`imagePreview${cardId}`);
+        const labelElement = document.querySelector(
+          `label[for="${fileInput.id}"]`
+        );
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+
+          const imageUrl = URL.createObjectURL(file);
+          imagePreview.src = imageUrl;
+          labelElement.style.display = "none";
+        } else {
+          labelElement.style.display = "block";
+        }
+      }
+      function removeImage(inputId, imageId) {
+        const input = document.getElementById(inputId);
+        const image = document.getElementById(imageId);
+        const labelElement = document.querySelector(`label[for="${inputId}"]`);
+        input.value = "";
+        image.style.display = "none";
+        labelElement.style.display = "block";
+      }
+    </script>
+    <script>
+      // ...
+    
+      function openNewPopup() {
+        const newPopup = document.getElementById("newPopup");
+        const newPopupText = document.getElementById("newPopupText");
+        const overlay = document.getElementById("overlay");
+    
+        newPopupText.innerText = "Atenção:";
+        newPopup.style.display = "block";
+        overlay.style.display = "block";
+      }
+    
+      // ...
+    </script>
+  </body>
+</html>
+
+agora agora...
